@@ -1,0 +1,173 @@
+# Handle line endings automatically for files detected as text
+# and leave all files detected as binary untouched.
+# * text=auto
+# NOTE - originally I had the above line un-commented.  it caused me a lot of grief related to line endings because I was dealing with WordPress plugins and the website changing line endings out if a user modified a plugin through the web interface.  commenting this line out seems to have alleviated the git chaos where simply switching to a branch caused it to believe 500 files were modified.
+
+#
+# The above will handle all files NOT found below
+#
+
+#
+## These files are text and should be normalized (Convert crlf => lf)
+#
+
+* text eol=lf
+
+# source code
+*.settings.dt text eol=lf
+*.csv text eol=lf
+*.php text eol=lf
+*.css text eol=lf
+*.sass text eol=lf
+*.scss text eol=lf
+*.less text eol=lf
+*.styl text eol=lf
+*.js text eol=lf
+*.coffee text eol=lf
+*.json text eol=lf
+*.htm text eol=lf
+*.html text eol=lf
+*.xml text eol=lf
+*.svg text eol=lf
+*.txt text eol=lf
+*.ini text eol=lf
+*.inc text eol=lf
+*.pl text eol=lf
+*.rb text eol=lf
+*.py text eol=lf
+*.scm text eol=lf
+*.sql text eol=lf
+*.sh text eol=lf
+*.h text eol=lf
+
+# Force batch scripts to always use CRLF line endings so that if a repo is accessed
+# in Windows via a file share from Linux, the scripts will work.
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+
+# UNITY
+*.cs text eol=lf
+*.meta text eol=lf
+*.prefab text eol=lf
+
+# templates
+*.ejs text eol=lf
+*.hbt text eol=lf
+*.jade text eol=lf
+*.haml text eol=lf
+*.hbs text eol=lf
+*.dot text eol=lf
+*.tmpl text eol=lf
+*.phtml text eol=lf
+
+# server config
+.htaccess text eol=lf
+
+# git config
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.gitconfig text eol=lf
+
+# code analysis config
+.jshintrc text eol=lf
+.jscsrc text eol=lf
+.jshintignore text eol=lf
+.csslintrc text eol=lf
+
+# misc config
+*.yaml text eol=lf
+*.yml text eol=lf
+.editorconfig text eol=lf
+
+# build config
+*.npmignore text eol=lf
+*.bowerrc text eol=lf
+
+# Heroku
+Procfile text eol=lf
+.slugignore text eol=lf
+
+# Documentation
+*.md text eol=lf
+LICENSE text eol=lf
+AUTHORS text eol=lf
+
+
+#
+## These files are binary and should be left untouched
+#
+
+# (binary is a macro for -text -diff)
+*.png binary
+*.PNG binary
+*.jpg binary
+*.JPG binary
+*.jpeg binary
+*.JPEG binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.bin binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.otf binary
+*.eot binary
+*.woff binary
+*.pyc binary
+*.pdf binary
+*.xls binary
+*.ogg binary
+*.wav binary
+*.jar binary
+*.dll binary
+*.DLL binary
+*.so binary
+*.aar binary
+*.so binary
+*.bundle binary
+*.psd binary
+*.a binary
+*.fbx binary
+*.FBX binary
+*.unitypackage binary
+*.tga binary
+*.exr binary
+*.tif binary
+*.blend binary
+*.mdb binary
+*.framework binary
+*.dmg binary
+*.exe binary
+*.xlsx binary
+*.nib binary
+*.car binary
+*.caf binary
+*.srcaar binary
+*.mobileprovision binary
+*.rd binary
+*.dylib binary
+*.hdr binary
+*.bmp binary
+*.bnk binary
+*.chm binary
+*.pdb binary
+*_probes.asset binary
+LightingData.asset binary
+IronSource binary
+ISTapjoyAdapter binary
+ISAdColonyAdapter binary
+ISUnityAdsAdapter binary
+ISFacebookAdapter binary
+FBAudienceNetwork binary
+FBSDKCoreKit binary
+ISApplovinAdapter binary
+ISAppLovinAdapter binary
+ISVungleAdapter binary
+AudioPluginOculusSpatializer binary
