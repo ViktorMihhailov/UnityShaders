@@ -135,6 +135,7 @@
      <None Include="Assets\Shaders\Shader16Unlit.shader" />
      <None Include="Assets\Shaders\Shader41Unlit.shader" />
      <None Include="Assets\Shaders\Shader39Unlit.shader" />
+     <None Include="Assets\Shaders\Shader1Unlit.shader" />
      <None Include="Assets\Shaders\Shader27Unlit.shader" />
      <None Include="Assets\Shaders\Shader62Lit.shader" />
      <None Include="Assets\Shaders\Shader56Lit.shader" />
