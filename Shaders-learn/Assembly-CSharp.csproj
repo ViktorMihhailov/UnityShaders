@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\TrackMouse.cs" />
      <Compile Include="Assets\Scripts\GirlController.cs" />
      <Compile Include="Assets\RevealController.cs" />
+     <Compile Include="Assets\MaterialApplier.cs" />
      <None Include="Assets\Shaders\Shader18Unlit.shader" />
      <None Include="Assets\Shaders\Shader23Unlit.shader" />
      <None Include="Assets\Shaders\Shader33Unlit.shader" />
