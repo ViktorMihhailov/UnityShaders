@@ -2,6 +2,9 @@
 {
     Properties
     {
+        _Size("Size", Range(0.0, 3)) = 0.2
+        _Color0("Color 0", Color) = (1,1,1,1)
+        _Color1("Color 1", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -16,6 +19,10 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+
+            float _Size;
+            fixed4 _Color0;
+            fixed4 _Color1;
 
             struct v2f
             {
@@ -35,12 +42,12 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                const fixed len = length(i.position.xy);
-                
-                fixed3 color = i.position * 2;
-                color.r = 1 - smoothstep(0.098, 0.1, len);
-                color.g = 1 - smoothstep(0.098, 0.1, len);
-                return fixed4(color, 1.0);
+                // float inCircle = 1 - smoothstep(0.198, 0.2, length(i.position.xy));
+                const float inCircle = 1 - step(_Size, length(i.position.xy));
+                // const float inCircle = (1 - step(_Size, abs(i.position.x))) * (1 - step(_Size, abs(i.position.y)));
+
+                fixed4 color = lerp(_Color0, _Color1, inCircle);
+                return color;
             }
             ENDCG
         }

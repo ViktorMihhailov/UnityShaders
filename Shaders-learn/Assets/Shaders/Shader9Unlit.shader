@@ -2,6 +2,10 @@
 {
     Properties
     {
+        _Mouse("Mouse", Vector) = (0,0,0,0)
+        _Size("Size", Range(0.0, 3)) = 0.2
+        _Color0("Color 0", Color) = (0,1,0,1)
+        _Color1("Color 1", Color) = (1,1,0,1)
     }
     SubShader
     {
@@ -16,20 +20,25 @@
 
             #include "UnityCG.cginc"
 
+            float4 _Mouse;
+            float _Size;
+            fixed4 _Color0;
+            fixed4 _Color1;
+
             float rect(float2 pt, float2 size, float2 center){
                 float2 p = pt - center;
                 float2 halfsize = size * 0.5;
 
-                float horz = step(-halfsize.x, p.x) - step(halfsize.x, p.x);
-                float vert = step(-halfsize.y, p.y) - step(halfsize.y, p.y);
-
-                return horz * vert;
+                float2 test = step(-halfsize, p) - step(halfsize, p);
+                return test.x * test.y;
             }
 
             fixed4 frag (v2f_img i) : SV_Target
             {
-                fixed4 color = 1;
-                return color;
+                half2 pos = i.uv;
+                float square = rect(pos, _Size, _Mouse.xy);
+                
+                return lerp(_Color0, _Color1, square);
             }
             ENDCG
         }

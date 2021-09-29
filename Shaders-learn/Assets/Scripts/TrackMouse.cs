@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class TrackMouse : MonoBehaviour
 {
     Material material;
@@ -12,17 +13,23 @@ public class TrackMouse : MonoBehaviour
     void Start()
     {
         Renderer rend = GetComponent<Renderer>();
-        material = rend.material;
+        material = rend.sharedMaterial;
         mouse = new Vector4();
         mouse.z = Screen.height;
         mouse.w = Screen.width;
         camera = Camera.main;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            mouse.x = hit.textureCoord.x;
+            mouse.y = hit.textureCoord.y;
+        }
         material.SetVector("_Mouse", mouse);
     }
+
+    // Update is called once per frame
 }
