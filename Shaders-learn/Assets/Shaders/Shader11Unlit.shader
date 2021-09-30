@@ -49,6 +49,11 @@
                 return float2x2(c, -s, s, c);
             }
             
+            float2x2 getScaleMatrix(float scale)
+            {
+               return float2x2(scale, 0, 0, scale);                         
+            }
+            
             float rect(float2 pt, float2 size, float2 center){
                 //return 0 if not in rect and 1 if it is
                 //step(edge, x) 0.0 is returned if x < edge, and 1.0 is returned otherwise.
@@ -78,13 +83,17 @@
                 return inCircle;
             }
 
+
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 center = float2(cos(_Time.y), sin(_Time.y)) * _Radius;
                 float2 pos = i.position * 2.0;
                 float2 size = _Size;
 
-                float2x2 mat = getRotationMatrix(_Time.y);
+                float2x2 matr = getRotationMatrix(_Time.y);
+                float2x2 mats = getScaleMatrix((sin(_Time.y) + 1) / 3 + 0.5);
+                float2x2 mat = mul(matr, mats);
+                
                 float2 p = mul(mat, pos - center) + center;
 
                 float3 color = saturate((i.position * 2 + 1) / 2) * rect(p, _Anchor.xy, size, center);

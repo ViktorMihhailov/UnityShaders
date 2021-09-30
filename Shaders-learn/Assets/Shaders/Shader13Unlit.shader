@@ -5,6 +5,7 @@
         _Color("Square Color", Color) = (1.0,1.0,0,1.0)
         _Size("Size", Float) = 0.3
         _Anchor("Anchor", Vector) = (0.0, 0.0, 0.5, 0.5)
+        _TileCount("Tile Count", Vector) = (1,1,0,0)
     }
     SubShader
     {
@@ -14,8 +15,6 @@
         Pass
         {
             CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11; has structs without semantics (struct v2f members position)
-#pragma exclude_renderers d3d11
             #pragma vertex vert
             #pragma fragment frag
 
@@ -40,6 +39,7 @@
             fixed4 _Color;
             float _Size;
             float4 _Anchor;
+            float2 _TileCount;
             
             float rect(float2 pt, float2 size, float2 center){
                 //return 0 if not in rect and 1 if it is
@@ -70,11 +70,20 @@
             float2x2 getScaleMatrix(float scale){
                 return float2x2(scale,0,0,scale);
             }
+
+            float circle(float2 pt, float radius, float2 center){
+                //return 0 if not in rect and 1 if it is
+                //step(edge, x) 0.0 is returned if x < edge, and 1.0 is returned otherwise.
+                float2 p = pt - center;
+                // float halfsize = size/2.0;
+                float inCircle = 1 - step(radius, length(p.xy));
+                return inCircle;
+            }
             
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 center = _Anchor.zw;
-                float2 pos = i.uv;
+                float2 pos = frac(i.uv * _TileCount.xy);     
                 float2x2 matr = getRotationMatrix(_Time.y);
                 float2x2 mats = getScaleMatrix((sin(_Time.y) + 1)/3 + 0.5);
                 float2x2 mat = mul(matr, mats);
@@ -82,6 +91,7 @@
                 float2 pt = mul(mat, pos - center) + center;
                   
                 float3 color = _Color * rect(pt, _Anchor.xy, float2(_Size, _Size), center);
+                color = lerp(color, fixed3(1,0,0), circle(pt, 0.01, center));
                 
                 return fixed4(color, 1.0);
             }
